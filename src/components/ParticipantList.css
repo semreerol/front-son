@@ -1,0 +1,125 @@
+/* Genel konteynerin stilini ayarlar */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header stilini ayarlar */
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 20px;
+}
+
+.header h2 {
+  margin: 0;
+  margin-right: 50px;
+}
+
+/* Katılımcı listesi stilini ayarlar */
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.participant-list {
+  margin-top: 50px;
+  margin-left: 30px;
+  margin-right: 20px;
+}
+
+.excel-button {
+  display: inline-block;
+  width: auto;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.excel-button:hover {
+  background-color: #0056b3;
+  /* Butonun üzerine gelindiğinde arka plan rengi */
+}
+
+/* Tablo stilini ayarlar */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Alternatif satırların arka plan rengini değiştirir */
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Buton stilini ayarlar */
+
+.add-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+
+.update-button, .delete-button {
+  font-size: 12px;  /* Smaller font size */
+  padding: 4px 8px; /* Smaller padding */
+  margin: 2px;      /* Smaller margin */
+  border: none;     /* Remove default border */
+  border-radius: 3px; /* Slightly rounded corners */
+  cursor: pointer;  /* Pointer cursor on hover */
+}
+
+.update-button {
+  background-color: #4CAF50; /* Green background */
+  color: white;              /* White text */
+}
+
+.delete-button {
+  background-color: #f44336; /* Red background */
+  color: white;              /* White text */
+  margin-left: 13px;
+}
+
+/* Optional: Add hover effects */
+.update-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.delete-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
