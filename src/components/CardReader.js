@@ -6,7 +6,7 @@ import "./CardReader.css";
 
 const sendEventData = async (data) => {
   try {
-    await axios.post('http://localhost:5043/api/events', data);
+    await axios.post('http://localhost:7282/api/events', data);
   } catch (error) {
     throw new Error('Error sending data');
   }
@@ -89,7 +89,7 @@ import "./CardReader.css";
 
 const sendUserEvent = async (eventUser) => {
   try {
-    await axios.post('http://localhost:5043/api/eventsusers',  eventUser);
+    await axios.post('http://localhost:7282/api/eventsusers',  eventUser);
   } catch (error) {
     throw new Error('Error sending user event');
   }
@@ -97,7 +97,7 @@ const sendUserEvent = async (eventUser) => {
 
 const fetchUserByCardId = async (cardId) => {
   try {
-    const response = await axios.get(`http://localhost:5043/api/users?UserID=${cardId}`);
+    const response = await axios.get(`http://localhost:7282/api/users?UserID=${cardId}`);
     return response.data[0]; // Assuming the card ID is unique and returns a single user
   } catch (error) {
     throw new Error('Error fetching user by card ID');

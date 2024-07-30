@@ -71,6 +71,8 @@
 .App {
   padding: 20px;
   flex: 1;
+  display: table;
+  visibility: visible;
   overflow-y: auto;
   /* Dikey kaydırma */
   max-height: calc(100vh - 100px);

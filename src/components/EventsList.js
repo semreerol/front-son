@@ -10,14 +10,25 @@ const EventList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5043/api/events')
-      .then(response => {
+    const fetchEvents = async () => {
+      try {
+        // Promise.all kullanılmasına gerek yok çünkü sadece bir istek yapılıyor
+        const response = await axios.get(`https://localhost:7282/api/events`);
+        // Tek bir istek olduğu için direkt response.data kullanılabilir
+        console.log(response.data);
         setEvents(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+        console.log(events);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchEvents();
   }, []);
+  useEffect(() => {
+    console.log("Updated Events:", events);
+  }, [events]); 
+
 
   const handleParticipantClick = (EventID) => {
     navigate(`/participant-list/${EventID}`);
@@ -35,7 +46,7 @@ const EventList = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredEvents = events.filter(event => 
+  const filteredEvents = events.filter((event) =>
     event.Name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -52,6 +63,8 @@ const EventList = () => {
             className="search-bar"
             value={searchTerm}
             onChange={handleSearchChange}
+            name="searchTerm"
+            id="searchTerm"
           />
           <button onClick={handleYeniEtkinlik} className="new-event-button">
             +YENİ ETKİNLİK
@@ -67,18 +80,20 @@ const EventList = () => {
               <th>ETKİNLİK TİPİ</th>
               <th>KONUM</th>
               <th>ZAMAN</th>
-              <th></th>
-              <th></th>
+              <th>STATUS</th>
+              <th>EVENT_STATUS</th>
             </tr>
           </thead>
           <tbody>
-            {filteredEvents.map(event => (
+            {filteredEvents.map((event) => (
               <tr key={event.EventID}>
                 <td>{event.EventID}</td>
                 <td>{event.Name}</td>
                 <td>{event.Type}</td>
                 <td>{event.Location}</td>
                 <td>{event.EventDateTime}</td>
+                <td>{event.Status}</td>
+                <td>{event.Event_Status}</td>
                 <td>
                   {event.button === "Katılımcı Listesi" ? (
                     <button
@@ -114,4 +129,3 @@ const EventList = () => {
 };
 
 export default EventList;
-
