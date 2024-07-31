@@ -11,10 +11,14 @@ function EventEnded() {
     navigate(`/participant-list/${EventID}`);
   };
 
+  const handleLoGoClick =()=>{
+    navigate("/");
+}
+
   return (
     <div className="EventEnded">
       <header className="header">
-        <img src={"./logo-esbas.png"} className="logo" alt="logo" />
+        <img src={`${process.env.PUBLIC_URL}/logo-esbas.png`} onClick={handleLoGoClick} className="logo" alt="logo" />
       </header>{" "}
       <div className="event-ended">
         <h1> ETKİNLİK SONA ERDİ. </h1>{" "}

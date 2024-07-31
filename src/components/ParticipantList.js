@@ -19,18 +19,18 @@ const ParticipantList = () => {
             try {
                 // Fetch user events and users
                 const [eventsUsersResponse, usersResponse] = await Promise.all([
-                    axios.get('http://localhost:7282/api/eventsusers'),
-                    axios.get('http://localhost:7282/api/users')
+                    axios.get('http://localhost:5043/api/eventsusers'),
+                    axios.get('http://localhost:5043/api/users')
                 ]);
                 console.log('EventsUsersResponse:', eventsUsersResponse.data);
                 console.log('UsersResponse:', usersResponse.data);
 
                 // Create a map for Events_Users
                 const eventsUsersMap = eventsUsersResponse.data.reduce((map, item) => {
-                    if (!map[item.EventID]) {
-                        map[item.EventID] = [];
+                    if (!map[item.eventID]) {
+                        map[item.eventID] = [];
                     }
-                    map[item.EventID].push(item.UserID);
+                    map[item.eventID].push(item.UserID);
                     return map;
                 }, {});
 
@@ -74,7 +74,7 @@ const ParticipantList = () => {
     return (  
         <div className="container">  
             <header className="header">  
-                <img src="./logo-esbas.png" onClick={handleLoGoClick} alt="ESBAŞ Logo" className="logo" />  
+                <img src={`${process.env.PUBLIC_URL}/logo-esbas.png`} onClick={handleLoGoClick} alt="ESBAŞ Logo" className="logo" />  
             </header>  
             <div className="participant-list">  
                 <div className="toolbar">  
@@ -103,11 +103,11 @@ const ParticipantList = () => {
                                 {users.map((user, index) => (  
                                     <tr key={user.ID}>  
                                         <td> {index + 1} </td>  
-                                        <td> {user.FullName} </td>  
-                                        <td> {user.UserID} </td>  
-                                        <td> {user.Department} </td>  
-                                        <td> {user.IsOfficeEmployee} </td>  
-                                        <td> {user.Gender} </td> 
+                                        <td> {user.fullName} </td>  
+                                        <td> {user.userID} </td>  
+                                        <td> {user.department} </td>  
+                                        <td> {user.isOfficeEmployee} </td>  
+                                        <td> {user.gender} </td> 
                                         <td> 
                                             <button className="update-button">
                                             <FaEdit />

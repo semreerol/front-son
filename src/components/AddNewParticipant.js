@@ -7,7 +7,7 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 const AddNewParticipant = () => {
   const navigate = useNavigate();
-  const {EventID} = useParams();
+  const {eventID} = useParams();
   const [form, setForm] = useState({
     "FullName": "",
     "UserID" : "",
@@ -25,16 +25,17 @@ const AddNewParticipant = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log(form);
     e.preventDefault();
     try {
        // Add the new user
-       const userResponse = await axios.post('http://localhost:7282/api/users', form);
+       const userResponse = await axios.post('http://localhost:5043/api/users', form);
       
        // Link the new user to the event
        const UserID = userResponse.data.id; // Get the new user's ID
-       await axios.post('http://localhost:7282/api/eventsusers', { EventID: parseInt(EventID), UserID });
+       await axios.post('http://localhost:5043/api/eventsusers', { eventID: parseInt(eventID), UserID });
  
-       navigate(`/participant-list/${EventID}`);
+       navigate(`/participant-list/${eventID}`);
      } catch (error) {
        console.error('Error adding participant:', error);
      }
@@ -43,12 +44,15 @@ const AddNewParticipant = () => {
   const handleIconClick = (path) => {
     navigate(path);
   };
+  const handleLoGoClick =()=>{
+    navigate("/");
+}
 
 
   return (
     <div className="add-participant-container">
       <header className="header">
-        <img src={"./logo-esbas.png"} className="logo" alt="ESBAŞ Logo" />
+        <img src={`${process.env.PUBLIC_URL}/logo-esbas.png`} onClick={handleLoGoClick} className="logo" alt="ESBAŞ Logo" />
       </header>{" "}
       <div className="add-participant">
         <h2> Yeni Katılımcı Ekle </h2>{" "}
@@ -104,9 +108,9 @@ const AddNewParticipant = () => {
               onChange={handleChange}
               required
             >
-              <option value=""> Seçiniz </option>{" "}
-              <option value="Ofis"> Ofis </option>{" "}
-              <option value="Saha"> Saha </option>{" "}
+              <option value=""> Seçiniz </option>
+              <option value="Ofis"> Ofis </option>
+              <option value="Saha"> Saha </option>
             </select>{" "}
           </label>{" "}
           <label>
@@ -122,12 +126,12 @@ const AddNewParticipant = () => {
               onChange={handleChange}
               required
             >
-              <option value=""> Seçiniz </option>{" "}
-              <option value="Kadın"> Kadın </option>{" "}
-              <option value="Erkek"> Erkek </option>{" "}
+              <option value=""> Seçiniz </option>
+              <option value="Kadın"> Kadın </option>
+              <option value="Erkek"> Erkek </option>
             </select>{" "}
           </label>{" "}
-          <button type="submit"> Kaydet </button>{" "}
+          <button type="submit"> Kaydet </button>
         </form>{" "}
       </div>{" "}
     </div>

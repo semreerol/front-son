@@ -9,25 +9,22 @@ const EventList = () => {
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
 
+  const fetchEvents = async () => {
+    try {
+      // Promise.all kullanılmasına gerek yok çünkü sadece bir istek yapılıyor
+      const response = await axios.get(`http://localhost:5043/api/events`);
+      // Tek bir istek olduğu için direkt response.data kullanılabilir
+      console.log(response.data);
+      setEvents(response.data);
+      //console.log(events);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        // Promise.all kullanılmasına gerek yok çünkü sadece bir istek yapılıyor
-        const response = await axios.get(`https://localhost:7282/api/events`);
-        // Tek bir istek olduğu için direkt response.data kullanılabilir
-        console.log(response.data);
-        setEvents(response.data);
-        console.log(events);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
     fetchEvents();
   }, []);
-  useEffect(() => {
-    console.log("Updated Events:", events);
-  }, [events]); 
+
 
 
   const handleParticipantClick = (EventID) => {
@@ -75,37 +72,37 @@ const EventList = () => {
         <table>
           <thead>
             <tr>
-              <th>#</th>
+              <th >#</th>
               <th>ETKİNLİK ADI</th>
               <th>ETKİNLİK TİPİ</th>
               <th>KONUM</th>
               <th>ZAMAN</th>
-              <th>STATUS</th>
-              <th>EVENT_STATUS</th>
+              <th></th>
+              <th></th>
+
             </tr>
           </thead>
           <tbody>
-            {filteredEvents.map((event) => (
-              <tr key={event.EventID}>
-                <td>{event.EventID}</td>
-                <td>{event.Name}</td>
-                <td>{event.Type}</td>
-                <td>{event.Location}</td>
-                <td>{event.EventDateTime}</td>
-                <td>{event.Status}</td>
-                <td>{event.Event_Status}</td>
+            {events.map((event) => (
+              <tr key={event.eventID}>
+                <td >{event.eventID}</td>
+                <td>{event.name}</td>
+                <td>{event.type}</td>
+                <td>{event.location}</td>
+                <td>{event.eventDateTime}</td>
+
                 <td>
                   {event.button === "Katılımcı Listesi" ? (
                     <button
                       className="katilimci-butonu"
-                      onClick={() => handleParticipantClick(event.EventID)}
+                      onClick={() => handleParticipantClick(event.eventID)}
                     >
                       Katılımcı Listesi
                     </button>
                   ) : (
                     <button
                       className="baslat-butonu"
-                      onClick={() => handleStartClick(event.EventID)}
+                      onClick={() => handleStartClick(event.eventID)}
                     >
                       Başlat
                     </button>

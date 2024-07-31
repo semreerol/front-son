@@ -18,15 +18,15 @@ const AddNewEvent = () => {
 
   const handleSave = () => {
     const newEvent = {
-      Name: eventName,
-      Type: eventType,
-      Location: location,
-      EventDateTime: time,
-      Status: true,
-      Event_Status: true,
+      name: eventName,
+      type: eventType,
+      location: location,
+      eventDateTime: time,
+      status: true,
+      event_Status: true,
     };
-
-    axios.post('http://localhost:7282/api/events', newEvent)
+    console.log(newEvent);
+    axios.post('http://localhost:5043/api/events', {newEvent})
       .then(response => {
         console.log('Event added successfully:', response.data);//olmadı .data ekle
         // Optionally, you can reset the form or navigate to another page
@@ -45,11 +45,14 @@ const AddNewEvent = () => {
   const handleIconClick = (path) => {
     navigate(path);
   };
+  const handleLoGoClick =()=>{
+    navigate("/");
+}
 
   return (
     <div className="add-new-event-container">
       <header className="header">
-        <img src="./logo-esbas.png" className="logo" alt="logo" />
+        <img src="./logo-esbas.png" onClick={handleLoGoClick} className="logo" alt="logo" />
       </header>
       <div className="add-new-event">
         <h1>Yeni Etkinlik Oluşturma</h1>
