@@ -5,6 +5,7 @@ import CardReader from './components/CardReader';
 import EventEnded from './components/EventEnded';
 import AddNewParticipant from './components/AddNewParticipant';
 import ParticipantList from './components/ParticipantList';
+import EventUpdate from './components/EventUpdate';
 import AddNewEvent from './components/AddNewEvent';
 import EventType from './settings/EventType';
 import EventLocation from './settings/EventLocation';
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/event-ended/:EventID" element= {<EventEnded />} />
                 <Route path="/add-new-participant/:EventID" element= {<AddNewParticipant />} />
                 <Route path="/participant-list/:EventID" element={<ParticipantList />} />
+                <Route path="/event-update/:EventID" element= {<EventUpdate />} />
                 <Route path="/add-new-event/event-type" element= {<EventType />} />
                 <Route path="/add-new-event/event-location" element= {<EventLocation />} />
                 <Route path="/add-new-participant/participant-department" element= {<ParticipantDepartment />} />

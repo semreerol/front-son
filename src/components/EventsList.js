@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import "./EventList.css";
 
 const EventList = () => {
+  const {eventID} = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
@@ -46,6 +47,10 @@ const EventList = () => {
   const filteredEvents = events.filter((event) =>
     event.Name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
+  const handleUpdateClick =(EventID)=>{
+    navigate(`/event-update/${EventID}`);
+  } ;
 
   return (
     <div className="container">
@@ -109,7 +114,7 @@ const EventList = () => {
                   )}
                 </td>
                 <td>
-                  <button className="update-button">
+                  <button className="update-button"  onClick={() => handleUpdateClick(event.eventID)}>
                     <FaEdit />
                   </button>
                   <button className="delete-button">
