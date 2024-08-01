@@ -1,7 +1,7 @@
 //participantlist.js
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 import "./ParticipantList.css";
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -97,21 +97,8 @@ const ParticipantList = () => {
             <div className="participant-list">
 
                 <div className="toolbar">
-                    {/* <select
-            
-            >
-            <option value="">Seçiniz</option>
-            <option value="">Seçiniz</option>
-            <option value="">Seçiniz</option>
-            <option value="">Seçiniz</option>
-            <option value="">Seçiniz</option>
-            <option value="">Seçiniz</option>
-            <option value="">Seçiniz</option>
-
-            </select> */}
                     <Cascader
                         className="Cascader"
-                       
                         options={options}
                         onChange={onChange}
                         multiple
@@ -148,7 +135,6 @@ const ParticipantList = () => {
                                         <td> {user.isOfficeEmployee} </td>
                                         <td> {user.gender} </td>
                                         <td>
-
                                             <button className="delete-button">
                                                 <FaTrashAlt />
                                             </button>
@@ -169,36 +155,3 @@ const ParticipantList = () => {
 };
 
 export default ParticipantList;
-
-/*
-import React from 'react';
-import { Cascader } from 'antd';
-const options = [
-  {
-    label: 'Light',
-    value: 'light',
-    
-    })),
-  },
-  {
-    label: 'Bamboo',
-    value: 'bamboo',
-    
-  },
-];
-const onChange = (value) => {
-  console.log(value);
-};
-const App = () => (
-  <Cascader
-    style={{
-      width: '100%',
-    }}
-    options={options}
-    onChange={onChange}
-    multiple
-    maxTagCount="responsive"
-  />
-);
-export default App;
-*/
