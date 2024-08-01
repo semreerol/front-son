@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./AddNewParticipant.css";
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 const AddNewParticipant = () => {
   const navigate = useNavigate();
@@ -48,8 +50,8 @@ const AddNewParticipant = () => {
     navigate("/");
   };
 
-  const handleAddGuestClick = () => {
-    navigate("/add-guest");
+  const handleIconClick = (path) => {
+    navigate(path);
   };
 
   return (
@@ -65,7 +67,7 @@ const AddNewParticipant = () => {
       <div className="add-participant">
         <div className="add-participant-header">
           <h2>Yeni Katılımcı Ekle</h2>
-          <button className="misafir-butonu" onClick={handleAddGuestClick}>Misafir Katılımcı</button>
+          <button className="misafir-butonu">Misafir Katılımcı</button>
         </div>
         <form onSubmit={handleSubmit}>
           <label>
@@ -88,24 +90,12 @@ const AddNewParticipant = () => {
               required
             />
           </label>
-
-          <button type="submit">Kaydet</button>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-export default AddNewParticipant;
-
-
-/*
-<label>
+          <label>
             Departman:
             <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-participant/participant-department')}
-            className="icon"
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-participant/participant-department')}
+              className="icon"
             />
             <select
               name="Department"
@@ -121,9 +111,9 @@ export default AddNewParticipant;
           <label>
             Çalışma Alanı:
             <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-participant/participant-location')}
-            className="icon"
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-participant/participant-location')}
+              className="icon"
             />
             <select
               name="IsOfficeEmployee"
@@ -139,9 +129,9 @@ export default AddNewParticipant;
           <label>
             Cinsiyet:
             <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-participant/participant-gender')}
-            className="icon"
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-participant/participant-gender')}
+              className="icon"
             />
             <select
               name="Gender"
@@ -152,6 +142,13 @@ export default AddNewParticipant;
               <option value=""> Seçiniz </option>
               <option value="Kadın"> Kadın </option>
               <option value="Erkek"> Erkek </option>
-            </select>{" "}
-          </label>{" "}
-*/
+            </select>
+          </label>
+          <button type="submit">Kaydet</button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default AddNewParticipant;

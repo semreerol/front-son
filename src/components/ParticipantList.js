@@ -77,7 +77,20 @@ const ParticipantList = () => {
                 <img src={`${process.env.PUBLIC_URL}/logo-esbas.png`} onClick={handleLoGoClick} alt="ESBAŞ Logo" className="logo" />  
             </header>  
             <div className="participant-list">  
-                <div className="toolbar">  
+
+                <div className="toolbar">
+                {/* <select
+            
+            >
+            <option value="">Seçiniz</option>
+            <option value="">Seçiniz</option>
+            <option value="">Seçiniz</option>
+            <option value="">Seçiniz</option>
+            <option value="">Seçiniz</option>
+            <option value="">Seçiniz</option>
+            <option value="">Seçiniz</option>
+
+            </select> */}
                     <button className="excel-button" onClick={exportToExcel}>  
                         +Excel'e Aktar  
                     </button>  
@@ -109,9 +122,7 @@ const ParticipantList = () => {
                                         <td> {user.isOfficeEmployee} </td>  
                                         <td> {user.gender} </td> 
                                         <td> 
-                                            <button className="update-button">
-                                            <FaEdit />
-                                            </button>
+                                            
                                             <button className= "delete-button">
                                             <FaTrashAlt />
                                             </button>

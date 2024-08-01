@@ -12,6 +12,8 @@ import EventLocation from './settings/EventLocation';
 import ParticipantDepartment from './settings/ParticipantDepartment';
 import ParticipantLocation from './settings/ParticipantLocation';
 import ParticipantGender from './settings/ParticipantGender';
+import AddGuest from './components/AddGuest';
+
 
 function App() {
     return (
@@ -19,6 +21,7 @@ function App() {
             <Routes>
                 <Route path="/" element= {<EventList />} /> 
                 <Route path="/add-new-event" element= {<AddNewEvent />} /> 
+                <Route path="/add-guest" element= {<AddGuest />} /> 
                 <Route path="/card-reader/:EventID" element= {<CardReader />} />
                 <Route path="/event-ended/:EventID" element= {<EventEnded />} />
                 <Route path="/add-new-participant/:EventID" element= {<AddNewParticipant />} />
