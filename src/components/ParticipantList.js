@@ -99,6 +99,7 @@ const ParticipantList = () => {
                 <div className="toolbar">
                     <Cascader
                         className="Cascader"
+                        placeholder="Kategori Seçin..." 
                         options={options}
                         onChange={onChange}
                         multiple
