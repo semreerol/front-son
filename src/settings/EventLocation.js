@@ -63,7 +63,7 @@ function EventLocation() {
           className="input-field"
         />
         <button onClick={addLocation} className="add-button">
-          +
+          + Yeni Konumu Ekle
         </button>{" "}
       </div>{" "}
       <button className="save-button"> KAYDET </button>{" "}

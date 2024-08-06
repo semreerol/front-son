@@ -66,8 +66,8 @@ const AddNewParticipant = () => {
       </header>
       <div className="add-participant">
         <div className="add-participant-header">
-          <h2>Yeni Katılımcı Ekle</h2>
-          <button className="misafir-butonu">Misafir Katılımcı</button>
+          <h2>Misafir Katılımcı Ekle</h2>
+          {/* <button className="misafir-butonu">Misafir Katılımcı</button> */}
         </div>
         <form onSubmit={handleSubmit}>
           <label>
