@@ -15,7 +15,7 @@ const UpdateEvent = () => {
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:5043/api/events`)
+    axios.get(`https://localhost:7282/EventsDTO`)
       .then(response => {
         const event = response.data.find(event => event.eventID === parseInt(EventID));
         if (event) {
@@ -40,11 +40,11 @@ const UpdateEvent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.get('http://localhost:5043/api/events')
+    axios.get('https://localhost:7282/EventsDTO')
       .then(response => {
         const eventToUpdate = response.data.find(event => event.eventID === parseInt(EventID));
         if (eventToUpdate) {
-          axios.put(`http://localhost:5043/api/events/${EventID}`, event)
+          axios.put(`https://localhost:7282/EventsDTO/${EventID}`, event)
             .then(response => {
               console.log("Event updated:", response.data);
               navigate("/");

@@ -13,7 +13,7 @@ const EventList = () => {
   const fetchEvents = async () => {
     try {
       // Promise.all kullanılmasına gerek yok çünkü sadece bir istek yapılıyor
-      const response = await axios.get(`http://localhost:5043/api/events`);
+      const response = await axios.get(`https://localhost:7282/EventsDTO`);
       // Tek bir istek olduğu için direkt response.data kullanılabilir
       console.log(response.data);
       setEvents(response.data);

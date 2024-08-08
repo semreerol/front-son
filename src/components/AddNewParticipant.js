@@ -29,11 +29,11 @@ const AddNewParticipant = () => {
     e.preventDefault();
     try {
        // Add the new user
-       const userResponse = await axios.post('http://localhost:5043/api/users', form);
+       const userResponse = await axios.post('https://localhost:7282/UsersDTO', form);
       
        // Link the new user to the event
        const UserID = userResponse.data.id; // Get the new user's ID
-       await axios.post('http://localhost:5043/api/eventsusers', { eventID: parseInt(eventID), UserID });
+       await axios.post('https://localhost:7282/Events_UsersDTO', { eventID: parseInt(eventID), UserID });
  
        navigate(`/participant-list/${eventID}`);
      } catch (error) {
