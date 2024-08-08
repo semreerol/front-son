@@ -10,8 +10,9 @@ const AddNewEvent = () => {
   const [eventName, setEventName] = useState("");
   const [eventType, setEventType] = useState("");
   const [location, setLocation] = useState("");
-  const [time, setTime] = useState("");
-
+  const [eventDateTime, setEventDateTime] = useState("");
+  const [EventLocationID,setEventLocationID] = useState("");
+  const [eventTypeID,setEventTypeID] = useState("");
 
   const navigate = useNavigate();
 
@@ -21,10 +22,13 @@ const AddNewEvent = () => {
       name: eventName,
       type: eventType,
       location: location,
-      eventDateTime: time,
+      eventDateTime: eventDateTime,
       status: true,
       event_Status: true,
+      eventLocation : EventLocationID,
+      eventTypeID : eventTypeID
     };
+
     console.log(newEvent);
     axios.post('https://localhost:7282/EventsDTO', {newEvent})
       .then(response => {
@@ -33,7 +37,9 @@ const AddNewEvent = () => {
         setEventName("");
         setEventType("");
         setLocation("");
-        setTime("");
+        setEventDateTime("");
+        setEventLocationID("");
+        setEventTypeID("");
 
         navigate("/");
       })
@@ -106,13 +112,14 @@ const AddNewEvent = () => {
           </select>
         </div>
         <div className="form-group">
-          <label>Zaman</label>
-          <input
-            type="text"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            placeholder="Yazınız"
-          />
+        <label>Date and Time</label>
+        <input
+            type="datetime-local" // DateTime picker kullanarak daha iyi tarih formatı yönetimi
+            name="eventDateTime"
+            value={eventDateTime}
+            onChange={(e) => setEventDateTime(e.target.value)} // onChange fonksiyonunu güncelle
+            required
+        />
         </div>
         <button onClick={handleSave}>Kaydet</button>
       </div>
