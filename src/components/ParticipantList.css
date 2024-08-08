@@ -57,6 +57,11 @@
   background-color: #0056b3;
   /* Butonun üzerine gelindiğinde arka plan rengi */
 }
+.Cascader{
+  width: 100%;
+  height: auto;
+  margin-top: 18px;
+}
 
 /* Tablo stilini ayarlar */
 table {

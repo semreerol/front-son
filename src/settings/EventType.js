@@ -62,7 +62,7 @@ function EventType() {
           className="input-field"
         />
         <button onClick={addEventType} className="add-button">
-          +
+          + Etkinliği Ekle
         </button>{" "}
       </div>{" "}
       <button className="save-button"> KAYDET </button>{" "}

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./AddNewParticipant.css";
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 const AddNewParticipant = () => {
   const navigate = useNavigate();
@@ -25,19 +27,6 @@ const AddNewParticipant = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-<<<<<<< HEAD
-       // Add the new user
-       const userResponse = await axios.post('https://localhost:7282/UsersDTO', form);
-      
-       // Link the new user to the event
-       const UserID = userResponse.data.id; // Get the new user's ID
-       await axios.post('https://localhost:7282/Events_UsersDTO', { eventID: parseInt(eventID), UserID });
- 
-       navigate(`/participant-list/${eventID}`);
-     } catch (error) {
-       console.error('Error adding participant:', error);
-     }
-=======
       // Yeni kullanıcı ekle
       const userResponse = await axios.post(
         "http://localhost:5043/api/users",
@@ -55,15 +44,14 @@ const AddNewParticipant = () => {
     } catch (error) {
       console.error("Error adding participant:", error);
     }
->>>>>>> 2fb7c774642db59bba8056f0bd3a6846c761626d
   };
 
   const handleLoGoClick = () => {
     navigate("/");
   };
 
-  const handleAddGuestClick = () => {
-    navigate("/add-guest");
+  const handleIconClick = (path) => {
+    navigate(path);
   };
 
   return (
@@ -78,8 +66,8 @@ const AddNewParticipant = () => {
       </header>
       <div className="add-participant">
         <div className="add-participant-header">
-          <h2>Yeni Katılımcı Ekle</h2>
-          <button className="misafir-butonu" onClick={handleAddGuestClick}>Misafir Katılımcı</button>
+          <h2>Misafir Katılımcı Ekle</h2>
+          {/* <button className="misafir-butonu">Misafir Katılımcı</button> */}
         </div>
         <form onSubmit={handleSubmit}>
           <label>
@@ -102,24 +90,12 @@ const AddNewParticipant = () => {
               required
             />
           </label>
-
-          <button type="submit">Kaydet</button>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-export default AddNewParticipant;
-
-
-/*
-<label>
+          <label>
             Departman:
             <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-participant/participant-department')}
-            className="icon"
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-participant/participant-department')}
+              className="icon"
             />
             <select
               name="Department"
@@ -135,9 +111,9 @@ export default AddNewParticipant;
           <label>
             Çalışma Alanı:
             <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-participant/participant-location')}
-            className="icon"
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-participant/participant-location')}
+              className="icon"
             />
             <select
               name="IsOfficeEmployee"
@@ -153,9 +129,9 @@ export default AddNewParticipant;
           <label>
             Cinsiyet:
             <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-participant/participant-gender')}
-            className="icon"
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-participant/participant-gender')}
+              className="icon"
             />
             <select
               name="Gender"
@@ -166,6 +142,13 @@ export default AddNewParticipant;
               <option value=""> Seçiniz </option>
               <option value="Kadın"> Kadın </option>
               <option value="Erkek"> Erkek </option>
-            </select>{" "}
-          </label>{" "}
-*/
+            </select>
+          </label>
+          <button type="submit">Kaydet</button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default AddNewParticipant;

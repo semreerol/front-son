@@ -60,10 +60,15 @@ const UpdateEvent = () => {
         console.error('Error fetching data:', error);
       });
   }; 
-  
+   const handleLoGoClick=()=>{
+    navigate("/");
+   }
 
   return (
     <div className="update-container">
+      <div><header className="header">
+        <img src={`${process.env.PUBLIC_URL}/logo-esbas.png`} onClick={handleLoGoClick} className="logo" alt="logo" />
+      </header></div>
       <h2>Update Event</h2>
       {event ? (
         <form onSubmit={handleSubmit}>
