@@ -4,8 +4,8 @@ import "./AddNewParticipant.css";
 import axios from "axios";
 
 const AddNewParticipant = () => {
-  const navigate = useNavigate();
-  const { eventID } = useParams();
+  const navigate = useNavigate(); // useNavigate kancasını kullanarak navigate fonksiyonunu tanımlıyoruz
+  const { eventID } = useParams(); // useParams kancasını kullanarak URL'den eventID parametresini alıyoruz
   const [form, setForm] = useState({
     FullName: "",
     UserID: "",
@@ -14,6 +14,7 @@ const AddNewParticipant = () => {
     Gender: "",
   });
 
+  // Form alanlarının değişimini yöneten fonksiyon
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
@@ -22,46 +23,30 @@ const AddNewParticipant = () => {
     });
   };
 
+  // Form gönderildiğinde çalışacak fonksiyon
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-<<<<<<< HEAD
-       // Add the new user
-       const userResponse = await axios.post('https://localhost:7282/UsersDTO', form);
-      
-       // Link the new user to the event
-       const UserID = userResponse.data.id; // Get the new user's ID
-       await axios.post('https://localhost:7282/Events_UsersDTO', { eventID: parseInt(eventID), UserID });
- 
-       navigate(`/participant-list/${eventID}`);
-     } catch (error) {
-       console.error('Error adding participant:', error);
-     }
-=======
       // Yeni kullanıcı ekle
-      const userResponse = await axios.post(
-        "http://localhost:5043/api/users",
-        form
-      );
+      const userResponse = await axios.post('https://localhost:7282/UsersDTO', form);
 
       // Yeni kullanıcıyı etkinlikle ilişkilendir
       const UserID = userResponse.data.id; // Yeni kullanıcının ID'sini al
-      await axios.post("http://localhost:5043/api/eventsusers", {
-        eventID: parseInt(eventID),
-        UserID,
-      });
+      await axios.post('https://localhost:7282/Events_UsersDTO', { eventID: parseInt(eventID), UserID });
 
       navigate(`/participant-list/${eventID}`);
+      console.log("Katılımcı başarıyla eklendi");
     } catch (error) {
-      console.error("Error adding participant:", error);
+      console.error('Katılımcı eklenirken hata oluştu:', error);
     }
->>>>>>> 2fb7c774642db59bba8056f0bd3a6846c761626d
   };
 
+  // Logoya tıklanınca ana sayfaya yönlendiren fonksiyon
   const handleLoGoClick = () => {
     navigate("/");
   };
 
+  // Misafir katılımcı ekle sayfasına yönlendiren fonksiyon
   const handleAddGuestClick = () => {
     navigate("/add-guest");
   };
@@ -102,7 +87,6 @@ const AddNewParticipant = () => {
               required
             />
           </label>
-
           <button type="submit">Kaydet</button>
         </form>
       </div>
@@ -111,6 +95,7 @@ const AddNewParticipant = () => {
 };
 
 export default AddNewParticipant;
+
 
 
 /*

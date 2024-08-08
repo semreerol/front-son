@@ -79,15 +79,71 @@ const ParticipantList = () => {
 
     const options = [
         {
-            label: 'Light',
-            value: 'light',
+            label: 'Ad Soyad',
+            value: 'ad-soyad',
         },
         {
-            label: 'Bamboo',
-            value: 'bamboo',
+            label: 'Doğum Tarihi',
+            value: 'dogum-tarihi',
+        },
+        {
+            label: 'Email',
+            value: 'email',
+        },
+        {
+            label: 'Personel Sicil No',
+            value: 'personel-sicil-no',
+        },
+        {
+            label: 'İşe Giriş Tarihi',
+            value: 'ise-giris-tarihi',
+        },
+        {
+            label: 'Masraf Merkezi',
+            value: 'masraf-merkezi',
+        },
+        {
+            label: 'Çalıştığı Birim',
+            value: 'çalıştığı-birim',
+        },
+        {
+            label: 'Görevi',
+            value: 'görevi',
+        },
+        {
+            label: 'Telefonu',
+            value: 'telefonu',
+        },
+        {
+            label: 'Ana Nitelik',
+            value: 'ana-nitelik',
+            children: [
+                {
+                    label: 'Çalışma Şekli',
+                    value: 'çalışma-şekli',
+                },
+                {
+                    label: 'Personel Tipi',
+                    value: 'personel-tipi',
+                },
+                {
+                    label: 'Tehlike Tipi',
+                    value: 'tehlike-tipi',
+                },
+            ],
+        },
+        {
+            label: 'Diğer Nitelik',
+            value: 'diğer-nitelik',
+            children: [
+                {
+                    label: 'Eğitim Durumu',
+                    value: 'eğitim-durumu',
+                },
+
+            ],
         },
     ];
-
     const onChange = (value) => {
         console.log(value);
     };
