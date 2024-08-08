@@ -29,13 +29,13 @@ const AddNewParticipant = () => {
     try {
       // Yeni kullanıcı ekle
       const userResponse = await axios.post(
-        "http://localhost:5043/api/users",
+        "https://localhost:7282/UsersDTO",
         form
       );
 
       // Yeni kullanıcıyı etkinlikle ilişkilendir
       const UserID = userResponse.data.id; // Yeni kullanıcının ID'sini al
-      await axios.post("http://localhost:5043/api/eventsusers", {
+      await axios.post("https://localhost:7282/Events_UsersDTO", {
         eventID: parseInt(eventID),
         UserID,
       });

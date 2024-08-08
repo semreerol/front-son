@@ -8,7 +8,7 @@ const AddNewParticipant = () => {
   const { eventID } = useParams(); // useParams kancasını kullanarak URL'den eventID parametresini alıyoruz
   const [form, setForm] = useState({
     FullName: "",
-    UserID: "",
+    CardID: "",
     Deparment: "",
     IsOfficeEmployee: "",
     Gender: "",
@@ -31,8 +31,8 @@ const AddNewParticipant = () => {
       const userResponse = await axios.post('https://localhost:7282/UsersDTO', form);
 
       // Yeni kullanıcıyı etkinlikle ilişkilendir
-      const UserID = userResponse.data.id; // Yeni kullanıcının ID'sini al
-      await axios.post('https://localhost:7282/Events_UsersDTO', { eventID: parseInt(eventID), UserID });
+      const CardID = userResponse.data.id; // Yeni kullanıcının ID'sini al
+      await axios.post('https://localhost:7282/Events_UsersDTO', { eventID: parseInt(eventID), CardID });
 
       navigate(`/participant-list/${eventID}`);
       console.log("Katılımcı başarıyla eklendi");
@@ -81,8 +81,8 @@ const AddNewParticipant = () => {
             Card ID:
             <input
               type="text"
-              name="UserID"
-              value={form["UserID"]}
+              name="CardID"
+              value={form["CardID"]}
               onChange={handleChange}
               required
             />

@@ -11,13 +11,17 @@ const AddNewEvent = () => {
   const [eventType, setEventType] = useState("");
   const [location, setLocation] = useState("");
   const [eventDateTime, setEventDateTime] = useState("");
-  const [EventLocationID,setEventLocationID] = useState("");
-  const [eventTypeID,setEventTypeID] = useState("");
+
 
   const navigate = useNavigate();
 
-
   const handleSave = () => {
+    // Boş alan kontrolü
+    if (!eventName || !eventType || !location || !eventDateTime) {
+      alert('Lütfen tüm alanları doldurun.');
+      return;
+    }
+
     const newEvent = {
       name: eventName,
       type: eventType,
@@ -25,8 +29,6 @@ const AddNewEvent = () => {
       eventDateTime: eventDateTime,
       status: true,
       event_Status: true,
-      eventLocation : EventLocationID,
-      eventTypeID : eventTypeID
     };
 
     console.log(newEvent);
@@ -34,12 +36,11 @@ const AddNewEvent = () => {
       .then(response => {
         console.log('Event added successfully:', response.data);//olmadı .data ekle
         // Optionally, you can reset the form or navigate to another page
-        setEventName("");
+        setEventName("burası boş mu ");
         setEventType("");
         setLocation("");
         setEventDateTime("");
-        setEventLocationID("");
-        setEventTypeID("");
+
 
         navigate("/");
       })

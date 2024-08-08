@@ -7,15 +7,15 @@ const UpdateEvent = () => {
   const {EventID} = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState({
-    EventName: "",
-    EventType: "",
-    Location: "",
-    EventDateTime: "",
+    eventName: "",
+    eventType: "",
+    location: "",
+    eventDateTime: "",
     status: 0
   });
 
   useEffect(() => {
-    axios.get(`https://localhost:7282/EventsDTO`)
+    axios.get(`https://localhost:7282/EventsDTO/${EventID}`)
       .then(response => {
         const event = response.data.find(event => event.eventID === parseInt(EventID));
         if (event) {
@@ -40,7 +40,7 @@ const UpdateEvent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.get('https://localhost:7282/EventsDTO')
+    axios.get(`https://localhost:7282/EventsDTO/${EventID}`)
       .then(response => {
         const eventToUpdate = response.data.find(event => event.eventID === parseInt(EventID));
         if (eventToUpdate) {
@@ -76,7 +76,7 @@ const UpdateEvent = () => {
             <label>Event Name</label>
             <input
               type="text"
-              name="EventName"
+              name="eventName"
               value={event.eventName}
               onChange={handleChange}
               required
@@ -86,7 +86,7 @@ const UpdateEvent = () => {
             <label>Event Type</label>
             <input
               type="text"
-              name="EventType"
+              name="eventType"
               value={event.eventType}
               onChange={handleChange}
               required
@@ -96,7 +96,7 @@ const UpdateEvent = () => {
             <label>Location</label>
             <input
               type="text"
-              name="Location"
+              name="location"
               value={event.location}
               onChange={handleChange}
               required
@@ -106,7 +106,7 @@ const UpdateEvent = () => {
             <label>Date and Time</label>
             <input
               type="text"
-              name="EventDateTime"
+              name="eventDateTime"
               value={event.eventDateTime}
               onChange={handleChange}
               required
