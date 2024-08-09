@@ -51,6 +51,29 @@ const EventList = () => {
   const handleUpdateClick =(EventID)=>{
     navigate(`/event-update/${EventID}`);
   } ;
+  
+  const handleDeleteClick =(EventID)=>{
+  //    // API'ye PUT isteği göndererek status değerini false olarak güncelle
+  // axios.put(`https://localhost:7282/EventsDTO/${EventID}`, { status: false })
+  // .then(response => {
+  //   console.log("Event status updated to false:", response.data);
+  //   // Eğer güncellemeden sonra bir işlem yapmak isterseniz buraya ekleyin.
+  // })
+  // .catch(error => {
+  //   console.error('Error updating event status:', error);
+  // });
+  // API'ye DELETE isteği göndererek status değerini false olarak güncelle
+  axios.delete(`https://localhost:7282/EventsDTO/SoftDelete${EventID}`)
+    .then(response => {
+      console.log("Event deleted (status set to false):", response.data);
+      navigate("/");
+      // Eğer silme işleminden sonra bir işlem yapmak isterseniz buraya ekleyin.
+    })
+    .catch(error => {
+      console.error('Error deleting event:', error);
+    });
+    
+  } ;
 
   return (
     <div className="container">
@@ -117,7 +140,7 @@ const EventList = () => {
                   <button className="update-button"  onClick={() => handleUpdateClick(event.eventID)}>
                     <FaEdit />
                   </button>
-                  <button className="delete-button">
+                  <button className="delete-button" onClick={() => handleDeleteClick(event.eventID)}>
                     <FaTrashAlt />
                   </button>
                 </td>
