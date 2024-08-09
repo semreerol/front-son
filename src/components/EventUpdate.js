@@ -4,11 +4,11 @@ import axios from "axios";
 import "./EventUpdate.css";
 
 const UpdateEvent = () => {
-  const {EventID} = useParams();
+  const { EventID } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState({
-    eventName: "",
-    eventType: "",
+    name: "",
+    type: "",
     location: "",
     eventDateTime: "",
     status: 0
@@ -17,7 +17,7 @@ const UpdateEvent = () => {
   useEffect(() => {
     axios.get(`https://localhost:7282/EventsDTO/${EventID}`)
       .then(response => {
-        const event = response.data.find(event => event.eventID === parseInt(EventID));
+        const event = response.data;
         if (event) {
           setEvent(event);
         } else {
@@ -27,7 +27,7 @@ const UpdateEvent = () => {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, [EventID]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,7 +42,8 @@ const UpdateEvent = () => {
 
     axios.get(`https://localhost:7282/EventsDTO/${EventID}`)
       .then(response => {
-        const eventToUpdate = response.data.find(event => event.eventID === parseInt(EventID));
+        console.log(response);
+        const eventToUpdate = response.data;
         if (eventToUpdate) {
           axios.put(`https://localhost:7282/EventsDTO/${EventID}`, event)
             .then(response => {
@@ -59,10 +60,10 @@ const UpdateEvent = () => {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }; 
-   const handleLoGoClick=()=>{
+  };
+  const handleLoGoClick = () => {
     navigate("/");
-   }
+  }
 
   return (
     <div className="update-container">
@@ -76,8 +77,8 @@ const UpdateEvent = () => {
             <label>Event Name</label>
             <input
               type="text"
-              name="eventName"
-              value={event.eventName}
+              name="name"
+              value={event.name}
               onChange={handleChange}
               required
             />
@@ -86,8 +87,8 @@ const UpdateEvent = () => {
             <label>Event Type</label>
             <input
               type="text"
-              name="eventType"
-              value={event.eventType}
+              name="type"
+              value={event.type}
               onChange={handleChange}
               required
             />

@@ -157,9 +157,10 @@ const ParticipantList = () => {
     const filterUsers = (categories) => {
         if (categories.length === 0) {
             setUsers(allUsers);
+            
             return;
         }
-
+        console.log(allUsers);
         const filteredUsers = allUsers.filter(user => {
             return categories.every(category => {
                 return Object.keys(user).some(key => {

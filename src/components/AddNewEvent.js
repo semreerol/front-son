@@ -15,15 +15,17 @@ const AddNewEvent = () => {
 
   const navigate = useNavigate();
 
-  const handleSave = () => {
+  const handleSave = async() => {
     // Boş alan kontrolü
     if (!eventName || !eventType || !location || !eventDateTime) {
       alert('Lütfen tüm alanları doldurun.');
       return;
     }
+    
+
 
     const newEvent = {
-      name: eventName,
+      Name: eventName,
       type: eventType,
       location: location,
       eventDateTime: eventDateTime,
@@ -32,7 +34,7 @@ const AddNewEvent = () => {
     };
 
     console.log(newEvent);
-    axios.post('https://localhost:7282/EventsDTO', {newEvent})
+    await axios.post('https://localhost:7282/EventsDTO', newEvent)
       .then(response => {
         console.log('Event added successfully:', response.data);//olmadı .data ekle
         // Optionally, you can reset the form or navigate to another page
@@ -47,6 +49,7 @@ const AddNewEvent = () => {
       .catch(error => {
         console.error('There was an error adding the event!', error);
       });
+      
   };
 
   const handleIconClick = (path) => {
