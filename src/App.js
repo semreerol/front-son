@@ -13,6 +13,7 @@ import ParticipantDepartment from './settings/ParticipantDepartment';
 import ParticipantLocation from './settings/ParticipantLocation';
 import ParticipantGender from './settings/ParticipantGender';
 import AddGuest from './components/AddGuest';
+import Plist from './components/Plist';
 
 
 function App() {
@@ -32,6 +33,8 @@ function App() {
                 <Route path="/add-new-participant/participant-department" element= {<ParticipantDepartment />} />
                 <Route path="/add-new-participant/participant-location" element= {<ParticipantLocation/>} />
                 <Route path="/add-new-participant/participant-gender" element= {<ParticipantGender/>} />
+                <Route path="/plist" element= {<Plist />} />
+
             </Routes>
         </Router>
     );

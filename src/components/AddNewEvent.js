@@ -5,59 +5,67 @@ import "./AddNewEvent.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 
-
 const AddNewEvent = () => {
   const [eventName, setEventName] = useState("");
   const [eventType, setEventType] = useState("");
   const [location, setLocation] = useState("");
   const [eventDateTime, setEventDateTime] = useState("");
-
+ // const [l_ID, setL_ID] = useState("");
+  //const [t_ID, setT_ID] = useState("");
 
   const navigate = useNavigate();
 
-  const handleSave = async() => {
+  const handleSave = async () => {
     // Boş alan kontrolü
-    if (!eventName || !eventType || !location || !eventDateTime) {
+    if (!eventName || !eventType || !location || !eventDateTime /*|| !l_ID || !t_ID*/) {
       alert('Lütfen tüm alanları doldurun.');
       return;
     }
-    
-
 
     const newEvent = {
-      Name: eventName,
-      type: eventType,
-      location: location,
+      name: eventName, // DTO'da küçük harfle "name" olarak tanımlı
+      t_id: eventType, 
+      l_id: location,
       eventDateTime: eventDateTime,
-      status: true,
-      event_Status: true,
+    //  l_ID: parseInt(l_ID), // ID değerlerini integer olarak gönderiyoruz
+      //t_ID: parseInt(t_ID), // ID değerlerini integer olarak gönderiyoruz
     };
 
     console.log(newEvent);
+
     await axios.post('https://localhost:7282/EventsDTO', newEvent)
       .then(response => {
-        console.log('Event added successfully:', response.data);//olmadı .data ekle
-        // Optionally, you can reset the form or navigate to another page
-        setEventName("burası boş mu ");
+        console.log('Event added successfully:', response.data);
+        // Formu sıfırlama veya başka bir sayfaya yönlendirme
+        setEventName("");
         setEventType("");
         setLocation("");
         setEventDateTime("");
-
+        //setL_ID("");
+        //setT_ID("");
 
         navigate("/");
       })
       .catch(error => {
         console.error('There was an error adding the event!', error);
       });
-      
   };
+  
+  const handleEventTypeChange = (e) => {
+    setEventType(parseInt(e.target.value)); 
+  };
+  const handleEventLocationChange = (e) => {
+    setLocation(parseInt(e.target.value)); 
+  };
+  
 
   const handleIconClick = (path) => {
     navigate(path);
   };
-  const handleLoGoClick =()=>{
+
+  const handleLoGoClick = () => {
     navigate("/");
-}
+  };
 
   return (
     <div className="add-new-event-container">
@@ -77,53 +85,46 @@ const AddNewEvent = () => {
         </div>
         <div className="form-group">
           <label>Etkinlik Türü
-          <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-event/event-type')}
-            className="icon"
+            <FontAwesomeIcon
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-event/event-type')}
+              className="icon"
             />
           </label>
-          <select
-            value={eventType}
-            onChange={(e) => setEventType(e.target.value)}
-          >
-            <option value="">Seçiniz</option>
-            <option value="Konferans">Konferans</option>
-            <option value="Webinar">Webinar</option>
-            <option value="Toplantı">Toplantı</option>
-            <option value="Atölye">Atölye</option>
-            <option value="Parti">Parti</option>
-            <option value="Gezi">Gezi</option>
-
-          </select>
+          <select value={eventType} onChange={handleEventTypeChange}>
+        <option value="">Seçiniz</option>
+        <option value="1">Konferans</option>
+        <option value="2">Webinar</option>
+        <option value="3">Toplantı</option>
+        <option value="4">Atölye</option>
+        <option value="5">Parti</option>
+        <option value="6">Gezi</option>
+      </select>
         </div>
         <div className="form-group">
           <label>Konum
-          <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-event/event-location')}
-            className="icon"
+            <FontAwesomeIcon
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-event/event-location')}
+              className="icon"
             />
           </label>
-          <select
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          >
+          <select value={location} onChange={handleEventLocationChange}>
             <option value="">Seçiniz</option>
-            <option value="Toplantı Salonu">Toplantı Salonu</option>
-            <option value="Bahçe">Bahçe</option>
-            <option value="İzmir">İzmir</option>
+            <option value="1">Toplantı Salonu</option>
+            <option value="2">Bahçe</option>
+            <option value="3">İzmir</option>
           </select>
         </div>
         <div className="form-group">
-        <label>Date and Time</label>
-        <input
-            type="datetime-local" // DateTime picker kullanarak daha iyi tarih formatı yönetimi
+          <label>Date and Time</label>
+          <input
+            type="datetime-local" 
             name="eventDateTime"
             value={eventDateTime}
-            onChange={(e) => setEventDateTime(e.target.value)} // onChange fonksiyonunu güncelle
+            onChange={(e) => setEventDateTime(e.target.value)} 
             required
-        />
+          />
         </div>
         <button onClick={handleSave}>Kaydet</button>
       </div>
@@ -132,4 +133,3 @@ const AddNewEvent = () => {
 };
 
 export default AddNewEvent;
-
