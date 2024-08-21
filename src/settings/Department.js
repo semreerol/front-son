@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./ParticipantDepartment.css";
+import "./Department.css";
 import { useNavigate } from "react-router-dom";
 
-function ParticipantDepartman() {
+function Department() {
   const navigate = useNavigate();
   const [departments, setDepartments] = useState([
     "İnsan Kaynakları",
@@ -67,4 +67,4 @@ function ParticipantDepartman() {
   );
 }
 
-export default ParticipantDepartman;
+export default Department;

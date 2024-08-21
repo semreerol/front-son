@@ -14,7 +14,6 @@ const UpdateEvent = () => {
     t_ID: "", // Type ID
     l_ID: "", // Location ID
     eventDateTime: "",
-    status: 0
   });
 
   const [eventTypes, setEventTypes] = useState([]);

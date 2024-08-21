@@ -20,7 +20,7 @@ const ParticipantList = () => {
             try {
                 // Fetch user events and users
                 const [eventsUsersResponse, usersResponse] = await Promise.all([
-                    axios.get('https://localhost:7282/Events_UsersDTO'),
+                     await axios.get(`https://localhost:7282/Events_UsersDTO/${EventID}`),
                     axios.get('https://localhost:7282/UsersDTO')
                 ]);
 

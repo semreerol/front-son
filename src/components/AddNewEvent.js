@@ -34,11 +34,11 @@ const AddNewEvent = () => {
   const handleSave = async () => {
     const newEvent = {
       Name: eventName,
-      T_ID: eventType, // Burada Type ID gönderilecek
-      L_ID: eventLocation, // Burada Location ID gönderilecek
+      t_ID: eventType, // Burada Type ID gönderilecek
+      l_ID: eventLocation, // Burada Location ID gönderilecek
       EventDateTime: eventDateTime,
-      Status: true,
-      Event_Status: true,
+     // Status: true,
+      //Event_Status: true,
     };
 
     console.log(newEvent);
