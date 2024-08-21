@@ -1,63 +1,71 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./AddNewEvent.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 
-
 const AddNewEvent = () => {
   const [eventName, setEventName] = useState("");
-  const [eventType, setEventType] = useState("");
-  const [location, setLocation] = useState("");
+  const [eventType, setEventType] = useState(""); // Bu ID olacak
+  const [eventLocation, setEventLocation] = useState(""); // Bu ID olacak
   const [eventDateTime, setEventDateTime] = useState("");
-
+  const [eventTypes, setEventTypes] = useState([]); // Dinamik seçenekler için state
+  const [locations, setLocations] = useState([]); // Dinamik seçenekler için state
 
   const navigate = useNavigate();
 
-  const handleSave = async() => {
-    // Boş alan kontrolü
-    if (!eventName || !eventType || !location || !eventDateTime) {
-      alert('Lütfen tüm alanları doldurun.');
-      return;
-    }
-    
+  useEffect(() => {
+    const fetchEventTypesAndLocations = async () => {
+      try {
+        const eventTypeResponse = await axios.get('https://localhost:7282/Event_TypeDTO');
+        const locationResponse = await axios.get('https://localhost:7282/Event_LocationDTO');
+        
+        setEventTypes(eventTypeResponse.data); // Dinamik veriyi state'e kaydet
+        setLocations(locationResponse.data); // Dinamik veriyi state'e kaydet
+      } catch (error) {
+        console.error("Error fetching event types or locations", error);
+      }
+    };
 
+    fetchEventTypesAndLocations();
+  }, []);
 
+  const handleSave = async () => {
     const newEvent = {
       Name: eventName,
-      type: eventType,
-      location: location,
-      eventDateTime: eventDateTime,
-      status: true,
-      event_Status: true,
+      T_ID: eventType, // Burada Type ID gönderilecek
+      L_ID: eventLocation, // Burada Location ID gönderilecek
+      EventDateTime: eventDateTime,
+      Status: true,
+      Event_Status: true,
     };
 
     console.log(newEvent);
+
     await axios.post('https://localhost:7282/EventsDTO', newEvent)
       .then(response => {
-        console.log('Event added successfully:', response.data);//olmadı .data ekle
-        // Optionally, you can reset the form or navigate to another page
-        setEventName("burası boş mu ");
-        setEventType("");
-        setLocation("");
-        setEventDateTime("");
+        console.log('Event added successfully:', response.data);
 
+        setEventName("");
+        setEventType("");
+        setEventLocation("");
+        setEventDateTime("");
 
         navigate("/");
       })
       .catch(error => {
         console.error('There was an error adding the event!', error);
       });
-      
   };
 
   const handleIconClick = (path) => {
     navigate(path);
   };
-  const handleLoGoClick =()=>{
+
+  const handleLoGoClick = () => {
     navigate("/");
-}
+  };
 
   return (
     <div className="add-new-event-container">
@@ -66,6 +74,7 @@ const AddNewEvent = () => {
       </header>
       <div className="add-new-event">
         <h1>Yeni Etkinlik Oluşturma</h1>
+
         <div className="form-group">
           <label>Etkinlik Adı</label>
           <input
@@ -75,56 +84,60 @@ const AddNewEvent = () => {
             placeholder="Yazınız"
           />
         </div>
+
         <div className="form-group">
           <label>Etkinlik Türü
-          <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-event/event-type')}
-            className="icon"
+            <FontAwesomeIcon
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-event/event-type')}
+              className="icon"
             />
           </label>
           <select
-            value={eventType}
+            value={eventType} // Seçilen ID burada saklanacak
             onChange={(e) => setEventType(e.target.value)}
           >
             <option value="">Seçiniz</option>
-            <option value="Konferans">Konferans</option>
-            <option value="Webinar">Webinar</option>
-            <option value="Toplantı">Toplantı</option>
-            <option value="Atölye">Atölye</option>
-            <option value="Parti">Parti</option>
-            <option value="Gezi">Gezi</option>
-
+            {eventTypes.map((type) => (
+              <option key={type.t_ID} value={type.t_ID}>
+                {type.name}
+              </option>
+            ))}
           </select>
         </div>
+
         <div className="form-group">
           <label>Konum
-          <FontAwesomeIcon
-            icon = {faCog}
-            onClick={() => handleIconClick('/add-new-event/event-location')}
-            className="icon"
+            <FontAwesomeIcon
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-event/event-location')}
+              className="icon"
             />
           </label>
           <select
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            value={eventLocation} // Seçilen ID burada saklanacak
+            onChange={(e) => setEventLocation(e.target.value)}
           >
             <option value="">Seçiniz</option>
-            <option value="Toplantı Salonu">Toplantı Salonu</option>
-            <option value="Bahçe">Bahçe</option>
-            <option value="İzmir">İzmir</option>
+            {locations.map((location) => (
+              <option key={location.l_ID} value={location.l_ID}>
+                {location.name}
+              </option>
+            ))}
           </select>
         </div>
+
         <div className="form-group">
-        <label>Date and Time</label>
-        <input
-            type="datetime-local" // DateTime picker kullanarak daha iyi tarih formatı yönetimi
+          <label>Tarih ve Saat</label>
+          <input
+            type="datetime-local"
             name="eventDateTime"
             value={eventDateTime}
-            onChange={(e) => setEventDateTime(e.target.value)} // onChange fonksiyonunu güncelle
+            onChange={(e) => setEventDateTime(e.target.value)}
             required
-        />
+          />
         </div>
+
         <button onClick={handleSave}>Kaydet</button>
       </div>
     </div>

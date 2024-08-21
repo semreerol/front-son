@@ -2,32 +2,43 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./EventUpdate.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 const UpdateEvent = () => {
   const { EventID } = useParams();
   const navigate = useNavigate();
+  
   const [event, setEvent] = useState({
     name: "",
-    type: "",
-    location: "",
+    t_ID: "", // Type ID
+    l_ID: "", // Location ID
     eventDateTime: "",
     status: 0
   });
 
+  const [eventTypes, setEventTypes] = useState([]);
+  const [locations, setLocations] = useState([]);
+
   useEffect(() => {
-    axios.get(`https://localhost:7282/EventsDTO/${EventID}`)
-      .then(response => {
-        const event = response.data;
-        if (event) {
-          setEvent(event);
-        } else {
-          console.error('Event not found');
-        }
-      })
-      .catch(error => {
+    const fetchEventDetails = async () => {
+      try {
+        const [eventResponse, typeResponse, locationResponse] = await Promise.all([
+          axios.get(`https://localhost:7282/EventsDTO/${EventID}`),
+          axios.get('https://localhost:7282/Event_TypeDTO'),
+          axios.get('https://localhost:7282/Event_LocationDTO')
+        ]);
+
+        setEvent(eventResponse.data);
+        setEventTypes(typeResponse.data);
+        setLocations(locationResponse.data);
+      } catch (error) {
         console.error('Error fetching data:', error);
-      });
-  }, []);
+      }
+    };
+
+    fetchEventDetails();
+  }, [EventID]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,39 +48,37 @@ const UpdateEvent = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios.get(`https://localhost:7282/EventsDTO/${EventID}`)
-      .then(response => {
-        console.log(response);
-        const eventToUpdate = response.data;
-        if (eventToUpdate) {
-          axios.put(`https://localhost:7282/EventsDTO/${EventID}`, event)
-            .then(response => {
-              console.log("Event updated:", response.data);
-              navigate("/");
-            })
-            .catch(error => {
-              console.error('Error updating event:', error);
-            });
-        } else {
-          console.error('Event not found');
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+    try {
+      await axios.put(`https://localhost:7282/EventsDTO/${EventID}`, event);
+      console.log("Event updated:", event);
+      navigate("/");
+    } catch (error) {
+      console.error('Error updating event:', error);
+    }
   };
+
+  const handleIconClick = (path) => {
+    navigate(path);
+  };
+
+  
   const handleLoGoClick = () => {
     navigate("/");
-  }
+  };
 
   return (
     <div className="update-container">
-      <div><header className="header">
-        <img src={`${process.env.PUBLIC_URL}/logo-esbas.png`} onClick={handleLoGoClick} className="logo" alt="logo" />
-      </header></div>
+      <header className="header">
+        <img
+          src={`${process.env.PUBLIC_URL}/logo-esbas.png`}
+          onClick={handleLoGoClick}
+          className="logo"
+          alt="logo"
+        />
+      </header>
       <h2>Update Event</h2>
       {event ? (
         <form onSubmit={handleSubmit}>
@@ -84,36 +93,60 @@ const UpdateEvent = () => {
             />
           </div>
           <div className="form-group">
-            <label>Event Type</label>
-            <input
-              type="text"
-              name="type"
-              value={event.type}
+            <label>Type
+            <FontAwesomeIcon
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-event/event-type')}
+              className="icon"
+            />
+            </label>
+            <select
+              name="t_ID"
+              value={event.t_ID}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select Type</option>
+              {eventTypes.map((type) => (
+                <option key={type.t_ID} value={type.t_ID}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="form-group">
-            <label>Location</label>
-            <input
-              type="text"
-              name="location"
-              value={event.location}
+            <label>Location
+            <FontAwesomeIcon
+              icon={faCog}
+              onClick={() => handleIconClick('/add-new-event/event-location')}
+              className="icon"
+            />
+            </label>
+            <select
+              name="l_ID"
+              value={event.l_ID}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select Location</option>
+              {locations.map((location) => (
+                <option key={location.l_ID} value={location.l_ID}>
+                  {location.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="form-group">
             <label>Date and Time</label>
             <input
-              type="text"
+              type="datetime-local"
               name="eventDateTime"
               value={event.eventDateTime}
               onChange={handleChange}
               required
             />
           </div>
-          <button onClick={handleSubmit} type="submit" className="save-button">Update Event</button>
+          <button type="submit" className="save-button">Update Event</button>
         </form>
       ) : (
         <div>Loading...</div>
@@ -123,3 +156,4 @@ const UpdateEvent = () => {
 };
 
 export default UpdateEvent;
+

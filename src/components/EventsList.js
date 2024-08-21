@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import "./EventList.css";
 
 const EventList = () => {
-  const {eventID} = useParams();
+  const { eventID } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [types, setTypes] = useState([]);
+
   const navigate = useNavigate();
 
   const fetchEvents = async () => {
     try {
-      // Promise.all kullanılmasına gerek yok çünkü sadece bir istek yapılıyor
-      const response = await axios.get(`https://localhost:7282/EventsDTO`);
-      // Tek bir istek olduğu için direkt response.data kullanılabilir
-      console.log(response.data);
-      setEvents(response.data);
-      //console.log(events);
+      const eventResponse = await axios.get(`https://localhost:7282/EventsDTO`);
+      const typeResponse = await axios.get('https://localhost:7282/Event_TypeDTO')
+      const locationResponse = await axios.get('https://localhost:7282/Event_LocationDTO');
+
+      setEvents(eventResponse.data);
+      setLocations(locationResponse.data);
+      setTypes(typeResponse.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+
   useEffect(() => {
     fetchEvents();
   }, []);
-
-
 
   const handleParticipantClick = (EventID) => {
     navigate(`/participant-list/${EventID}`);
@@ -45,35 +48,23 @@ const EventList = () => {
   };
 
   const filteredEvents = events.filter((event) =>
-    event.Name?.toLowerCase().includes(searchTerm.toLowerCase())
+    event.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
-  const handleUpdateClick =(EventID)=>{
+
+  const handleUpdateClick = (EventID) => {
     navigate(`/event-update/${EventID}`);
-  } ;
-  
-  const handleDeleteClick =(EventID)=>{
-  //    // API'ye PUT isteği göndererek status değerini false olarak güncelle
-  // axios.put(`https://localhost:7282/EventsDTO/${EventID}`, { status: false })
-  // .then(response => {
-  //   console.log("Event status updated to false:", response.data);
-  //   // Eğer güncellemeden sonra bir işlem yapmak isterseniz buraya ekleyin.
-  // })
-  // .catch(error => {
-  //   console.error('Error updating event status:', error);
-  // });
-  // API'ye DELETE isteği göndererek status değerini false olarak güncelle
-  axios.delete(`https://localhost:7282/EventsDTO/SoftDelete${EventID}`)
-    .then(response => {
-      console.log("Event deleted (status set to false):", response.data);
-      navigate("/");
-      // Eğer silme işleminden sonra bir işlem yapmak isterseniz buraya ekleyin.
-    })
-    .catch(error => {
-      console.error('Error deleting event:', error);
-    });
-    
-  } ;
+  };
+
+  const handleDeleteClick = (EventID) => {
+    axios.delete(`https://localhost:7282/EventsDTO/SoftDelete_Status${EventID}`)
+      .then(eventResponse => {
+        console.log("Event deleted (status set to false):", eventResponse.data);
+        navigate("/");
+      })
+      .catch(error => {
+        console.error('Error deleting event:', error);
+      });
+  };
 
   return (
     <div className="container">
@@ -100,52 +91,54 @@ const EventList = () => {
         <table>
           <thead>
             <tr>
-              <th >#</th>
+              <th>ID</th>
               <th>ETKİNLİK ADI</th>
               <th>ETKİNLİK TİPİ</th>
               <th>KONUM</th>
               <th>ZAMAN</th>
               <th></th>
               <th></th>
-
             </tr>
           </thead>
           <tbody>
-            {events.map((event) => (
-              <tr key={event.eventID}>
-                <td >{event.eventID}</td>
-                <td>{event.name}</td>
-                <td>{event.type}</td>
-                <td>{event.location}</td>
-                <td>{event.eventDateTime}</td>
+            {filteredEvents.map((event) => {
 
-                <td>
-                  {event.button === "Katılımcı Listesi" ? (
+              const eventType = types.find((types) => types.t_ID == event.event_Type.t_ID);
+              console.log("t_ID",event.event_Type.t_ID);
+              const eventLocation = locations.find((locations) => locations.l_ID == event.event_Location.l_ID);
+              console.log("l_ID",event.event_Location.l_ID);
+              return (
+                <tr key={event.eventID}>
+                  <td>{event.eventID}</td>
+                  <td>{event.name}</td>
+                  <td>{eventType ? eventType.name : 'Unknown'}</td>
+                  <td>{eventLocation ? eventLocation.name : 'Unknown'}</td>
+                  <td>{event.eventDateTime}</td>
+                  <td>
                     <button
                       className="katilimci-butonu"
                       onClick={() => handleParticipantClick(event.eventID)}
                     >
                       Katılımcı Listesi
                     </button>
-                  ) : (
                     <button
                       className="baslat-butonu"
                       onClick={() => handleStartClick(event.eventID)}
                     >
                       Başlat
                     </button>
-                  )}
-                </td>
-                <td>
-                  <button className="update-button"  onClick={() => handleUpdateClick(event.eventID)}>
-                    <FaEdit />
-                  </button>
-                  <button className="delete-button" onClick={() => handleDeleteClick(event.eventID)}>
-                    <FaTrashAlt />
-                  </button>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td>
+                    <button className="update-button" onClick={() => handleUpdateClick(event.eventID)}>
+                      <FaEdit />
+                    </button>
+                    <button className="delete-button" onClick={() => handleDeleteClick(event.eventID)}>
+                      <FaTrashAlt />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
