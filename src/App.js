@@ -11,8 +11,13 @@ import EventLocation from './settings/EventLocation';
 import ParticipantLocation from './settings/ParticipantLocation';
 import ParticipantGender from './settings/ParticipantGender';
 import AddGuest from './components/AddGuest';
+<<<<<<< HEAD
 import Department from './settings/Department';
 import Plist from './components/Plist';
+=======
+import Plist from './components/Plist';
+
+>>>>>>> 4cb33403359dea332c271cc42594eef85abc7025
 
 function App() {
     return (
@@ -30,7 +35,11 @@ function App() {
                 <Route path="/add-new-participant/department" element= { < Department />} />
                 <Route path="/add-new-participant/participant-location" element= {<ParticipantLocation/>} />
                 <Route path="/add-new-participant/participant-gender" element= {<ParticipantGender/>} />
+<<<<<<< HEAD
                 <Route path="/plist" element={<Plist />} />
+=======
+                <Route path="/plist" element= {<Plist />} />
+>>>>>>> 4cb33403359dea332c271cc42594eef85abc7025
 
             </Routes>
         </Router>

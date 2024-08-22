@@ -32,8 +32,7 @@ const EventList = () => {
   }, []);
 
   const handleParticipantClick = (EventID) => {
-    //navigate(`/plist/${EventID}`);
-    navigate('/plist');
+    navigate(`/participant-list/${EventID}`);
   };
 
 
@@ -103,20 +102,16 @@ const EventList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredEvents.map((event) => {
+            {events.map((event) => (
+              <tr key={event.eventID}>
+                <td >{event.eventID}</td>
+                <td>{event.name}</td>
+                <td>{event.type}</td>
+                <td>{event.location}</td>
+                <td>{event.eventDateTime}</td>
 
-              const eventType = types.find((types) => types.t_ID === event.event_Type.t_ID);
-              console.log("t_ID",event.event_Type.t_ID);
-              const eventLocation = locations.find((locations) => locations.l_ID === event.event_Location.l_ID);
-              console.log("l_ID",event.event_Location.l_ID);
-              return (
-                <tr key={event.eventID}>
-                  <td>{event.eventID}</td>
-                  <td>{event.name}</td>
-                  <td>{eventType ? eventType.name : 'Unknown'}</td>
-                  <td>{eventLocation ? eventLocation.name : 'Unknown'}</td>
-                  <td>{event.eventDateTime}</td>
-                  <td>
+                <td>
+                  event.button === "Katılımcı Listesi" ? (
                     <button
                       className="katilimci-butonu"
                       onClick={() => handleParticipantClick(event.eventID)}
@@ -139,8 +134,9 @@ const EventList = () => {
                     </button>
                   </td>
                 </tr>
-              );
-            })}
+              ))},
+            )
+            
           </tbody>
         </table>
       </div>
