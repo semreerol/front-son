@@ -40,7 +40,7 @@ const AddNewParticipant = () => {
         UserID,
       });
 
-      navigate(`/participant-list/${eventID}`);
+      navigate(`/plist/${eventID}`);
     } catch (error) {
       console.error("Error adding participant:", error);
     }

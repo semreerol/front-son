@@ -32,8 +32,10 @@ const EventList = () => {
   }, []);
 
   const handleParticipantClick = (EventID) => {
-    navigate(`/participant-list/${EventID}`);
+    //navigate(`/plist/${EventID}`);
+    navigate('/plist');
   };
+
 
   const handleStartClick = (EventID) => {
     navigate(`/card-reader/${EventID}`);
@@ -103,9 +105,9 @@ const EventList = () => {
           <tbody>
             {filteredEvents.map((event) => {
 
-              const eventType = types.find((types) => types.t_ID == event.event_Type.t_ID);
+              const eventType = types.find((types) => types.t_ID === event.event_Type.t_ID);
               console.log("t_ID",event.event_Type.t_ID);
-              const eventLocation = locations.find((locations) => locations.l_ID == event.event_Location.l_ID);
+              const eventLocation = locations.find((locations) => locations.l_ID === event.event_Location.l_ID);
               console.log("l_ID",event.event_Location.l_ID);
               return (
                 <tr key={event.eventID}>

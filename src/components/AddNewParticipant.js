@@ -34,7 +34,7 @@ const AddNewParticipant = () => {
       const CardID = userResponse.data.id; // Yeni kullanıcının ID'sini al
       await axios.post('https://localhost:7282/Events_UsersDTO', { eventID: parseInt(eventID), CardID });
 
-      navigate(`/participant-list/${eventID}`);
+      navigate(`/plist/${eventID}`);
       console.log("Katılımcı başarıyla eklendi");
     } catch (error) {
       console.error('Katılımcı eklenirken hata oluştu:', error);

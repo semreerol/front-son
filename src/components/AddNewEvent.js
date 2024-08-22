@@ -37,8 +37,8 @@ const AddNewEvent = () => {
       t_ID: eventType, // Burada Type ID gönderilecek
       l_ID: eventLocation, // Burada Location ID gönderilecek
       EventDateTime: eventDateTime,
-     // Status: true,
-      //Event_Status: true,
+     Status: true,
+      Event_Status: true,
     };
 
     console.log(newEvent);

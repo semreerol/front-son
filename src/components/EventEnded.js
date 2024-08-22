@@ -8,7 +8,8 @@ function EventEnded() {
   const { EventID } = useParams();//get EventID from URL parameters
 
   const handlePersonelList = () => {
-    navigate(`/participant-list/${EventID}`);
+   //navigate(`/participant-list/${EventID}`);
+   navigate('/plist')
   };
 
   const handleLoGoClick =()=>{

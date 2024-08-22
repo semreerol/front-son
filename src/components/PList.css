@@ -1,0 +1,24 @@
+.grid-container {
+    height: 400px; /* Tablonun yüksekliği */
+    width: 100%;  /* Tablonun genişliği */
+    margin-top: 20px; /* Üst boşluk */
+    margin-bottom: 20px; /* Alt boşluk */
+}
+
+h1 {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+button {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
